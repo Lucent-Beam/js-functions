@@ -9,19 +9,34 @@ class Pelicula {
 		this.calificacion = calificacion;
 
 		this.validarIMDB(id);
+		this.validarTitulo(titulo);
+		this.validarDirector(director);
+		this.validarEstreno(estreno);
+
 	}
 
 	validarCadena(propiedad, valor){
-		console.log(valor);
-		if(!valor) return console.warn(`${propiedad} "${valor} está vacío."`);
+		
+		if(!valor) return console.warn(`${propiedad} "${valor}" está vacío.`);
 
-		if(typeof valor !== "string") return console.error(`${propiedad} "${valor}" ingresado, NO es una cadena de texto."`);
+		if(typeof valor !== "string") return console.error(`${propiedad} "${valor}" ingresado, NO es una cadena de texto.`);
 
 		return true;
 	}
 
-	valirLongitudCadena(propiedad, valor, longitud){
+	validarNumero(propiedad, valor){
+		if(!valor) return console.warn(`${propiedad} "${valor}" está vacío.`);
+
+		if(typeof valor !== "number") return console.error(`${propiedad} "${valor}" ingresado, NO es una cadena de número.`);
+
+		return true;
 		
+	}
+
+	valirLongitudCadena(propiedad, valor, longitud){
+		if(valor.length > longitud) return console.error(`${propiedad} "${valor}" excede el número de caracteres permitidos (${longitud})`);
+
+		return true;
 	}
 
 	validarIMDB(id){
@@ -31,6 +46,26 @@ class Pelicula {
 			}
 		}
 	}
+
+	validarTitulo(titulo){
+		if(this.validarCadena("Título", titulo)){
+			this.valirLongitudCadena("Título", titulo, 100);
+		}
+	}
+
+	validarDirector(director){
+		if(this.validarCadena("Director", director)){
+			this.valirLongitudCadena("Director", director, 50);
+		}
+	}
+
+	validarEstreno(estreno){
+		if(this.validarNumero("Año de Estreno", estreno)){
+			if(!(/^([0-9]){4}$/.test(estreno))){
+				return console.error(`Año de Estreno "${estreno}" no es válido, debe ser un número de 4 dígitos.`);
+			}
+		}
+	}
 }
 
-const peli = new Pelicula({id: "1234567tt"});
+const peli = new Pelicula({id: "tt1234567", titulo: "Alguna película", director:"ssssssssssssssssssssssssssssssssssssssssssss", estreno: 2011});
