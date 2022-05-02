@@ -1,4 +1,6 @@
 //a way to work with events and functions
+const carrito = document.querySelector('#carrito');
+
 const listaCursos = document.querySelector('#lista-cursos');
 const contenedorCarrito = document.querySelector('#lista-carrito tbody');
 
@@ -12,6 +14,7 @@ function cargarEventListeners(){
 	listaCursos.addEventListener('click', agregarCurso);
 
 	//section 2
+	carrito.addEventListener('click', eliminarCurso);
 
 	//section 3
 
@@ -29,6 +32,18 @@ function agregarCurso(e){
 
 }
 
+function eliminarCurso(e) {
+
+	console.log(e.target.classList);
+	if ( e.target.classList.contains('borrar-curso') ) {
+		const cursoId = e.target.getAttribute('data-id');
+
+		articulosCarrito = articulosCarrito.filter( curso => curso.id !== cursoId );
+
+		carritoHTML();
+	}
+}
+
 function leerDatosCurso(curso){
 	const infoCurso = {
 		imagen: "imagen",
@@ -40,7 +55,24 @@ function leerDatosCurso(curso){
 
 	console.log(infoCurso);
 
-	articulosCarrito = [...articulosCarrito, infoCurso];
+	const existe = articulosCarrito.some( curso => curso.id === infoCurso.id );
+
+	if (existe) {
+		const cursos = articulosCarrito.map( curso => {
+			if ( curso.id === infoCurso.id ) {
+				curso.cantidad++;
+				return curso;
+			} else {
+				return curso;
+			}
+		} );
+
+		articulosCarrito = [...cursos];
+	} else {
+		articulosCarrito = [...articulosCarrito, infoCurso];
+	}
+
+
 
 }
 
