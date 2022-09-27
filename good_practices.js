@@ -1,0 +1,1 @@
+//agregarAlCarrito(producto, mostarContenidoDeCarrito);

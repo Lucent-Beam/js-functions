@@ -4,6 +4,11 @@
 function Animal(nombre, genero) {
 	this.nombre = nombre;
 	this.genero = genero;
+	
+	//Métodos
+	// this.sonar() = function () {
+	// 	console.log("Hago sonidos por que estoy vivo.");	
+	// }
 
 }
 
